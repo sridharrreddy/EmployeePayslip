@@ -14,6 +14,11 @@ namespace Services
 
         public PayslipInfo GeneratePayslipForEmployee(EmployeeInformation data)
         {
+            if (!data.IsModelValid())
+            {
+                return null;
+            }
+
             var payslip = new PayslipInfo
             {
                 Name = string.Concat(data.EmployeeFirstName, " ", data.EmployeeLastName),

@@ -30,5 +30,15 @@ namespace Services.Models
 
             return list;
         }
+
+        public bool IsModelValid()
+        {
+            //TODO: Move rules to config file. Demonstrated elsewhere.
+            if (AnnualSalary <= 0 || SuperRate < 0 || SuperRate > 50 || (string.IsNullOrWhiteSpace(EmployeeFirstName) && string.IsNullOrWhiteSpace(EmployeeLastName)))
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

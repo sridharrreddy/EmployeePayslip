@@ -8,14 +8,39 @@ namespace Services.Tests
     public class PayslipServiceTests
     {
         [TestMethod]
-        public void GeneratePayslipForEmployee_TestOn_TestData1()
+        public void GeneratePayslipForEmployee_TestInvalidData_ReturnsNullForPayslip()
+        {
+            //Arrange
+            var mockTaxCalculator = new Mock<ITaxCalculatorService>();
+            IPayslipService _payslipService = new PayslipService(mockTaxCalculator.Object);
+
+            var data = new EmployeeInformation()
+            {
+                EmployeeFirstName = "David",
+                EmployeeLastName = "Rudd",
+                AnnualSalary = 60050,
+                PayslipFrequency = Enums.CalculationFrequency.Monthly,
+                SuperRate = 52, // << Invalid
+                PayPeriod = "01 Jan-31 Jan"
+            };
+
+            //Act
+            var payslip = _payslipService.GeneratePayslipForEmployee(data);
+
+            //Assert
+            Assert.IsNull(payslip);
+        }
+
+        [TestMethod]
+        public void GeneratePayslipForEmployee_TestData1_ReturnExpectedData()
         {
             //Arrange
             var mockTaxCalculator = new Mock<ITaxCalculatorService>();
             mockTaxCalculator.Setup(tc => tc.CalculateIncomeTax(It.IsAny<int>(), Enums.CalculationFrequency.Monthly)).Returns(922);
             IPayslipService _payslipService = new PayslipService(mockTaxCalculator.Object);
 
-            var data = new EmployeeInformation() {
+            var data = new EmployeeInformation()
+            {
                 EmployeeFirstName = "David",
                 EmployeeLastName = "Rudd",
                 AnnualSalary = 60050,
@@ -24,7 +49,8 @@ namespace Services.Tests
                 PayPeriod = "01 Jan-31 Jan"
             };
 
-            var expectedResult = new PayslipInfo() {
+            var expectedResult = new PayslipInfo()
+            {
                 Name = "David Rudd",
                 GrossIncome = 5004,
                 IncomeTax = 922,
@@ -41,7 +67,7 @@ namespace Services.Tests
         }
 
         [TestMethod]
-        public void GeneratePayslipForEmployee_TestOn_TestData2()
+        public void GeneratePayslipForEmployee_TestData2_ReturnExpectedData()
         {
             //Arrange
             var mockTaxCalculator = new Mock<ITaxCalculatorService>();

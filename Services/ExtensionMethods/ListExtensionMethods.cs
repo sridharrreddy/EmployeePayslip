@@ -21,6 +21,10 @@ namespace Services.ExtensionMethods
 
             foreach (T item in data)
             {
+                if(item == null)
+                {
+                    continue;
+                }
                 DataRow row = table.NewRow();
                 foreach (PropertyDescriptor prop in properties)
                 {

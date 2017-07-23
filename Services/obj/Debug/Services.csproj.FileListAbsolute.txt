@@ -1,0 +1,4 @@
+F:\Projects\EmployeePayslip\Services\bin\Debug\Services.dll
+F:\Projects\EmployeePayslip\Services\bin\Debug\Services.pdb
+F:\Projects\EmployeePayslip\Services\obj\Debug\Services.dll
+F:\Projects\EmployeePayslip\Services\obj\Debug\Services.pdb
